@@ -1,3 +1,5 @@
+# Nuevo diagrama de nota
+
 ```mermaid
 sequenceDiagram
     participant browser
@@ -32,7 +34,7 @@ sequenceDiagram
 
     browser->>server: GET <br> https://studies.cs.helsinki.fi/exampleapp/data.json
     activate server
-    server-->>browser: JSON document <br> [{"content":"Javascript is Easy", "Date": "2023-01-01},...]
+    server-->>browser: JSON document <br> [{"content":"Javascript is Easy", "date": "2023-01-01"},...]
     deactivate server
 
     activate browser
