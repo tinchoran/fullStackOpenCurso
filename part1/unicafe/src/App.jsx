@@ -19,18 +19,22 @@ const App = () => {
   const [neutral, setNeutral] = useState(0)
   const [bad, setBad] = useState(0)
 
- 
+  const all = bad+neutral+good;
+
 
   return (
     <div>
       <h1>Give Feedback</h1>
-      <Button text={ "good" } handleClick={ () => setGood( prev => prev + 1) } />
-      <Button text={ "neutral" } handleClick={ () => setNeutral( prev => prev + 1 ) } />
-      <Button text={ "bad" } handleClick={ () => setBad( prev => prev + 1 ) } />
+      <Button text= "good"     handleClick={ () => setGood( prev => prev + 1) } />
+      <Button text= "neutral"  handleClick={ () => setNeutral( prev => prev + 1 ) } />
+      <Button text= "bad"      handleClick={ () => setBad( prev => prev + 1 ) } />
       <h2>Statistics</h2>
-      <Display type= { "good" } value= { good } />
-      <Display type= { "neutral" } value= { neutral } />
-      <Display type= { "bad" } value= { bad } />
+      <Display type = "good"    value = { good } />
+      <Display type = "neutral" value = { neutral } />
+      <Display type = "bad"     value = { bad } />
+      <Display type = "all"   value = { all }/>
+      <Display type = "average"   value = { (( 1*good + 0*neutral + -1*bad )/all || 0)}/>
+      <Display type = "positive"   value = { `${(good/all || 0)*100}%` }/>
     </div>
   )
 }
