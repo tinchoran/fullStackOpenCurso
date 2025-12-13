@@ -7,6 +7,25 @@ const Button = ( { handleClick, text } ) => (
   </button>
 )
 
+const Display = ( { text, num } ) => {
+  if(num === 0) {
+    return (
+      <>
+        <h2>Anécdota más votada</h2>
+        <p>No hay votos registrados</p>
+      </>
+    )
+  } else {
+    return (
+      <>
+        <h2>Anécdota más votada</h2>
+        <p>{ text }</p>
+        <p> Tiene { num } votos </p>
+      </>
+    )
+  }
+}
+
 const App = () => {
   const anecdotes = [
     'If it hurts, do it more often.',
@@ -28,12 +47,21 @@ const App = () => {
     setVote(copyVotes);  
   }
 
+  const numMax = Math.max(...votes);
+  const indiceNumMax = votes.indexOf(numMax);
+
   return (
     <div>
+      <h2>Anecdota del día</h2>
       <p>{anecdotes[selected]}</p>
       <Button text="Próxima" handleClick={ () => setSelected( Math.floor(Math.random() * anecdotes.length) ) } />
       <Button text="votar" handleClick={ () =>  handleVote( selected ) }  />
       <p>Esta nota tiene {votes[selected]} votos </p>
+
+
+      <Display text={ anecdotes[indiceNumMax] } num={numMax} />
+
+
     </div>
   )
 }
