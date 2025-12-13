@@ -7,10 +7,11 @@ const Button = (props) => (
   </button>
 )
 
-const Display = (props) => (
-  <div>
-    {props.type} {props.value}
-  </div>
+const StatisticLine = ( { value, text } ) => (
+  <tr>
+    <td>{ text }</td>
+    <td>{ value }</td>
+  </tr>
 )
 
 const Statistics = ( { bad, good, all, neutral } ) => {
@@ -26,12 +27,16 @@ const Statistics = ( { bad, good, all, neutral } ) => {
   return (
       <div>
         <h2>Statistics</h2>
-        <Display type = "good"    value = { good } />
-        <Display type = "neutral" value = { neutral } />
-        <Display type = "bad"     value = { bad } />
-        <Display type = "all"   value = { all }/>
-        <Display type = "average"   value = { (( 1*good + 0*neutral + -1*bad )/all || 0)}/>
-        <Display type = "positive"   value = { `${(good/all || 0)*100}%` }/>
+        <table>
+          <tbody>
+            <StatisticLine text = "good"    value = { good } />
+            <StatisticLine text = "neutral" value = { neutral } />
+            <StatisticLine text = "bad"     value = { bad } />
+            <StatisticLine text = "all"   value = { all }/>
+            <StatisticLine text = "average"   value = { (( 1*good + 0*neutral + -1*bad )/all || 0)}/>
+            <StatisticLine text = "positive"   value = { `${(good/all || 0)*100}%` }/>
+          </tbody>
+        </table>
       </div>    
   )
 }
