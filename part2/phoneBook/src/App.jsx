@@ -12,11 +12,13 @@ const App = () => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    const newPerson = {
-      name: newName
-    };
-    setPersons(persons.concat(newPerson));
-    setNewName("");
+    if(!persons.some(person => person.name.toLowerCase() === newName.toLowerCase())){
+        const newPerson = {
+          name: newName
+        };
+        setPersons(persons.concat(newPerson));
+        setNewName("");
+    } else alert(`${newName} is already on the list!`)
   }
 
   return (
