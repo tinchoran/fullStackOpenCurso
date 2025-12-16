@@ -38,24 +38,37 @@ const App = () => {
   const handleSubmit = (event) => {
     event.preventDefault();
 
-    if(!persons.some(person => person.name.toLowerCase() === newName.toLowerCase())){
-        const newPerson = {
-          name: newName,
-          number: newNumber,
-        };
-        
-        service.createPerson(newPerson)
-          .then(addedPerson => {
-            setPersons(persons.concat(addedPerson));
-            setNewName("");
-            setNewNumber("");
-          })
-          .catch(err => {
-            alert("Hubo un error al añadir a la persona")
-            console.log(err);
-          })
+    const existingPerson = persons.find(person => person.name.toLowerCase() === newName.toLowerCase())
 
-    } else alert(`${newName} is already on the list!`)
+    if(!existingPerson){
+      const newPerson = {
+        name: newName,
+        number: newNumber,
+      };
+        
+      service.createPerson(newPerson)
+        .then(addedPerson => {
+          setPersons(persons.concat(addedPerson));
+          setNewName("");
+          setNewNumber("");
+        })
+        .catch(err => {
+          alert("Hubo un error al añadir a la persona")
+          console.log(err);
+        })
+
+    } else {
+      if(window.confirm(`${newName} is already on the Phone Book, replace the old number with the new?`)){
+        const personToUpdate = {
+          ...existingPerson,
+          number: newNumber
+        };
+        service.updatePerson( personToUpdate )
+          .then(updatedPerson => {
+            setPersons(persons.map(person => (person.id !== updatedPerson.id)?person:updatedPerson ))
+          })
+      }
+    }
   }
 
   const handleDelete = (id) => {
