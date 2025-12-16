@@ -1,6 +1,6 @@
 import { useState,useEffect } from 'react'
 
-import axios from 'axios';
+import service from './services/personsService';
 
 import Filter from './components/Filter';
 import PersonForm from './components/PersonForm';
@@ -13,9 +13,9 @@ const App = () => {
   const [ filterValue, setFilterValue ] = useState('');
 
   useEffect(() => {
-    axios.get("http://localhost:3001/persons")
-      .then(response => {
-        setPersons(response.data);
+    service.getAll()
+      .then(persons => {
+        setPersons(persons)
       })
   },[])
 
@@ -37,15 +37,24 @@ const App = () => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
+
     if(!persons.some(person => person.name.toLowerCase() === newName.toLowerCase())){
         const newPerson = {
           name: newName,
           number: newNumber,
-          id: persons.length + 1
         };
-        setPersons(persons.concat(newPerson));
-        setNewName("");
-        setNewNumber("");
+        
+        service.createPerson(newPerson)
+          .then(addedPerson => {
+            setPersons(persons.concat(addedPerson));
+            setNewName("");
+            setNewNumber("");
+          })
+          .catch(err => {
+            alert("Hubo un error al añadir a la persona")
+            console.log(err);
+          })
+
     } else alert(`${newName} is already on the list!`)
   }
 
