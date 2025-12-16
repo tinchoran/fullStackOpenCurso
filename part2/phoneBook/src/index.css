@@ -13,10 +13,18 @@
 
 .notification{
     padding: .5rem;
-    background-color: rgb(92, 188, 92);
-    border: 2px solid  rgb(16, 87, 16);
     border-radius: 5px;
     color: white;
     font-weight: 500;
     font-size: 18px;
+}
+
+.success{
+    background-color: rgb(92, 188, 92);
+    border: 2px solid  rgb(16, 87, 16);
+}
+
+.error{
+    background-color: rgb(173, 82, 82);
+    border: 2px solid  rgb(62, 2, 2);   
 }

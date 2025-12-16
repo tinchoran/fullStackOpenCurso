@@ -12,8 +12,8 @@ const App = () => {
   const [ newNumber, setNewNumber ] = useState(''); 
   const [ newName, setNewName ] = useState('')
   const [ filterValue, setFilterValue ] = useState('');
-  const [ successMessage, setSuccesMessage ] = useState(null);
-
+  const [ successMessage, setSuccessMessage ] = useState(null);
+  const [ errorMessage, setErrorMessage ] = useState(null)
 
   useEffect(() => {
     service.getAll()
@@ -54,9 +54,9 @@ const App = () => {
           setPersons(persons.concat(addedPerson));
           setNewName("");
           setNewNumber("");
-          setSuccesMessage(`Se añadio a ${addedPerson.name}`)
+          setSuccessMessage(`Se añadio a ${addedPerson.name}`)
           setTimeout(() => {
-            setSuccesMessage(null)
+            setSuccessMessage(null)
           },5000)
 
         })
@@ -74,10 +74,19 @@ const App = () => {
         service.updatePerson( personToUpdate )
           .then(updatedPerson => {
             setPersons(persons.map(person => (person.id !== updatedPerson.id)?person:updatedPerson ))
-            setSuccesMessage(`Se actualizó el número de ${updatedPerson.name}`)
+            setSuccessMessage(`Se actualizó el número de ${updatedPerson.name}`)
             setTimeout(() => {
-              setSuccesMessage(null)
+              setSuccessMessage(null)
             },5000)
+          })
+          .catch(err => {
+            setErrorMessage(`Hubo un error al actualizar el número de ${personToUpdate.name}. La persona no existe`);
+
+            setPersons(persons.filter(person => person.id !== personToUpdate.id));
+
+            setTimeout(() => {
+              setErrorMessage(null)
+            }, 5000);
           })
       }
     }
@@ -98,7 +107,8 @@ const App = () => {
       <h2>Phonebook</h2>
       <h3>Add a New</h3>
 
-      <Notification message={successMessage} />
+      <Notification message={successMessage} type={"success"} />
+      <Notification message={errorMessage} type={"err"} />
 
       <PersonForm
         handleNameChange={handleNameChange}
