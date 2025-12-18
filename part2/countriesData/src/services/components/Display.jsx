@@ -1,4 +1,4 @@
-const Display = ( { content } ) => {
+const Display = ( { content, handleButtonClick } ) => {
 
     if(content.length === 0){
         return (
@@ -19,15 +19,22 @@ const Display = ( { content } ) => {
     if(content.length > 1 && content.length <= 10){
         return (
             <div>
-                <ul>
-                    { content.map( country => <li key={country.cca3}>{country.name.official}</li> ) }
+                <ul style={{listStyle:"none"}}>
+                    { content.map( country => 
+                    <li key={country.cca3}>
+                        {country.name.official}
+                        <button onClick={() => handleButtonClick(country.cca3)}>Show</button>
+                    </li> 
+                    ) }
                 </ul>
             </div>
         )
     }
 
     if(content.length === 1){
+
         const country = content[0];
+
         return (
             <div>
                 <h2>{country.name.official}</h2>

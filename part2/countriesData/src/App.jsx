@@ -36,6 +36,19 @@ function App() {
 
   }
 
+  const handleCountryButtonClick = (id) => {
+
+    // Encontrar el país solicitado
+    const countryFiltered = allCountries.find(country => country.cca3 === id);
+
+    // Cambiar el estado de filtered countries
+    setFilteredCountries( [ countryFiltered ] )
+
+    // Cambiar el estado de searchedCountry (para que aparezca el nombre completo del país en el input como si el usuario lo hubiera escrito él mismo)
+    setSearchedCountry( countryFiltered.name.official )
+
+  }
+
   return (
     <>
       <form>
@@ -49,7 +62,7 @@ function App() {
           />  
         </div>
       </form>
-      <Display content={filteredCountries} />
+      <Display content={filteredCountries} handleButtonClick={ handleCountryButtonClick }/>
     </>
   )
 }
