@@ -1,4 +1,8 @@
-const Display = ( { content, handleButtonClick } ) => {
+import weatherService from "../services/weatherService";
+
+
+const Display = ( { content, handleButtonClick, weather } ) => {
+
 
     if(content.length === 0){
         return (
@@ -35,6 +39,7 @@ const Display = ( { content, handleButtonClick } ) => {
 
         const country = content[0];
 
+        
         return (
             <div>
                 <h2>{country.name.official}</h2>
@@ -67,6 +72,16 @@ const Display = ( { content, handleButtonClick } ) => {
                 <picture>
                     <img src={country.flags.svg} alt={`Bandera de ${country.name.common || country.name.official}`} />
                 </picture>
+
+                {
+                    (weather.isDefined)
+                        ?<div>
+                            <p>Temperatura: {weather.info.temp}</p>
+                            <p>Viento: {weather.info.wind}</p>
+                        </div>
+                        :<div>Cargando</div>
+                }
+
             </div>
         )
     }
